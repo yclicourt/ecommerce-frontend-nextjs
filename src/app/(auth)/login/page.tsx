@@ -1,11 +1,9 @@
 "use client";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,24 +14,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
-  const handleClick = () => {
-    
-    <Alert variant="destructive">
-      <AlertCircle className="h-4 w-4" />
-      <AlertTitle>Error</AlertTitle>
-      <AlertDescription>
-        {errors.length > 0 && (
-          <div>
-            <ul className="mb-0">
-              {errors.map((error) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </AlertDescription>
-    </Alert>;
-  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,7 +61,7 @@ const LoginPage = () => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <Button className="space-y-1.5 mt-4" onClick={handleClick}>
+            <Button className="space-y-1.5 mt-4">
               Sign In
             </Button>
           </form>

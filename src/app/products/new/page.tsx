@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {  ProductPage } from "./new/product-page";
+import { ProductForm } from "./productForm";
 
 function ProductNewPage() {
   return (
@@ -9,7 +9,7 @@ function ProductNewPage() {
           <CardTitle>Create Product</CardTitle>
         </CardHeader>
         <CardContent>
-          <ProductPage />
+          <ProductForm />
         </CardContent>
       </Card>
     </div>

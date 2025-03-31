@@ -1,18 +1,36 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Product } from "@/models/product";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-interface Props {
-  onSubmit: () => void;
-}
-
-function ProductForm({ onSubmit }: Props) {
+export function ProductForm() {
   const {
+    handleSubmit,
     register,
     formState: { errors },
   } = useForm<Product>();
+
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const onSubmit = handleSubmit(async (productData: Product) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: JSON.stringify(productData),
+    });
+    const data = await res.json();
+    console.log(data);
+    router.push("/");
+  });
 
   return (
     <div>
@@ -50,5 +68,3 @@ function ProductForm({ onSubmit }: Props) {
     </div>
   );
 }
-
-export default ProductForm;
