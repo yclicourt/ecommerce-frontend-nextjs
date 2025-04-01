@@ -29,7 +29,7 @@ export function ProductForm() {
     });
     const data = await res.json();
     console.log(data);
-    router.push("/");
+    router.push("/products");
   });
 
   return (
