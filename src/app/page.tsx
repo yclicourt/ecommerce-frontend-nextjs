@@ -10,6 +10,7 @@ function HomePage() {
           <li className="space-x-5 font-bold">
             <Link href="/">Home</Link>
             <Link href="/products/new">Products</Link>
+            <Link href="/dashboard">Dashboard</Link>
             <Link href="#">About us</Link>
             <Link href="#">Contact</Link>
             <ButtonAuth/>

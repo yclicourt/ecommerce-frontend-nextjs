@@ -51,7 +51,9 @@ export function ProductForm() {
         </div>
         <div className="space-y-1.5 mt-2">
           <Label>Price</Label>
-          <Input {...register("price", { required: true })} />
+          <Input
+            {...register("price", { required: true, valueAsNumber: true })}
+          />
           {errors.price && (
             <p className=" text-red-500 text-sm">Price is required</p>
           )}

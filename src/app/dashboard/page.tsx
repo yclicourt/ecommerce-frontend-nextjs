@@ -1,20 +1,14 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
+import ButtonAuth from "@/components/shared/ButtonAuth";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Product } from "@/models/product";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
+  const { data: session } = useSession();
   const [categories, setCategories] = useState([]);
-  const { data: session, status } = useSession();
-
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
-  console.log(session);
-  console.log(process.env.NEXT_PUBLIC_BACKEND_URL);
 
   const getCategories = async () => {
     const res = await fetch(
@@ -34,22 +28,29 @@ const Dashboard = () => {
   useEffect(() => {
     async function loadCategories() {
       const res = await getCategories();
-      setCategories(res.data);
+      setCategories(res);
     }
     loadCategories();
-  },);
-
+  });
   return (
-    <div>
-      <h1>Dashboard</h1>
-      {/* <Button onClick={getCategories} variant={"default"}>
-        Get Cats
-      </Button> */}
-      <pre>
-        <code>{JSON.stringify(session, null, 2)}</code>
-      </pre>
-      <div>
-        {categories.map((category: Product) => (
+    <>
+      <div className="flex justify-between p-5">
+        <h1 className="text-2xl font-bold">Ecommerce Yoadev</h1>
+        <nav className="mr-40">
+          <ul>
+            <li className="space-x-5 font-bold">
+              <Link href="/">Home</Link>
+              <Link href="/products/new">Products</Link>
+              <Link href="/dashboard">Dashboard</Link>
+              <Link href="#">About us</Link>
+              <Link href="#">Contact</Link>
+              <ButtonAuth />
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div className="grid grid-cols-4 gap-3 ">
+        {categories?.map((category: Category) => (
           <Card key={category.name}>
             <CardHeader>
               <CardTitle>{category.name}</CardTitle>
@@ -60,7 +61,7 @@ const Dashboard = () => {
           </Card>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 export default Dashboard;

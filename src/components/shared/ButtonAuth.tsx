@@ -2,6 +2,7 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
+import toast from "react-hot-toast";
 
 export default function ButtonAuth() {
   const { data: session, status } = useSession();
@@ -14,10 +15,23 @@ export default function ButtonAuth() {
     return (
       <>
         <Button
-          onClick={() => signOut()}
+          onClick={() => {
+            signOut();
+            if (status === "authenticated") {
+              toast.success("Logout successfully", {
+                position: "bottom-right",
+                style: {
+                  background: "#101010",
+                  color: "#fff",
+                },
+              });
+            } else {
+              toast.error("Close your session");
+            }
+          }}
           variant={"destructive"}
         >
-          Sign out
+          Sign Out
         </Button>
       </>
     );
@@ -25,10 +39,13 @@ export default function ButtonAuth() {
   return (
     <>
       <Button
-        onClick={() => signIn()}
+        onClick={() => {
+          signIn();
+         
+        }}
         variant={"default"}
       >
-        Sign in
+        Sign In
       </Button>
     </>
   );

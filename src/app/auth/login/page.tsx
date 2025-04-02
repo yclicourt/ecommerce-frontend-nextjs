@@ -4,16 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { status } = useSession();
   const router = useRouter();
-
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +30,6 @@ const LoginPage = () => {
       setErrors(responseNextAuth.error.split(","));
       return;
     }
-
     router.push("/");
   };
 
@@ -61,10 +61,33 @@ const LoginPage = () => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            <Button className="space-y-1.5 mt-4">
+            <Button
+              className="space-y-1.5 mt-4"
+              onClick={() => {
+                if (status === "unauthenticated") {
+                  toast.success("Login successfully", {
+                    position: "bottom-right",
+                    style: {
+                      background: "#101010",
+                      color: "#fff",
+                    },
+                  });
+                }
+              }}
+            >
               Sign In
             </Button>
           </form>
+
+          {errors.length > 0 && (
+            <div className="text-red-600 font-bold mt-2">
+              <ul className="mb-0">
+                {errors.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
