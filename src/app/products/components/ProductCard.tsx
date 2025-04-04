@@ -31,8 +31,9 @@ export function ProductCard({
       <CardContent>
         <Image
           src={product.image}
-          width={250}
-          height={100}
+          width={600}
+          height={400}
+          className="w-full h-auto"
           alt="Product image"
           priority
         ></Image>

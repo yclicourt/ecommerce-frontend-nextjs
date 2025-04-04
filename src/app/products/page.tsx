@@ -34,10 +34,6 @@ const ProductPage = () => {
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`,
       {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.user?.token}`,
-        },
       }
     );
     return await res.json();
@@ -46,6 +42,7 @@ const ProductPage = () => {
   const handleRemoveProduct = async (id: number) => {
     await deleteProduct(id);
     router.refresh();
+    window.location.reload();
   };
 
   useEffect(() => {
