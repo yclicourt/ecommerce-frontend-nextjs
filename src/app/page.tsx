@@ -6,6 +6,7 @@ import Image from "next/image";
 import banner from "../../public/images/images6.jpeg";
 import logo from "../../public/images/logo3.jpeg";
 import { SortByProducts } from "@/components/shared/SortByProducts";
+import { CategorySelectForm } from "@/components/shared/CategorySelectForm";
 
 function HomePage() {
   const handleCart = () => {
@@ -59,7 +60,9 @@ function HomePage() {
         ></Image>
       </section>
       <section className="flex flex-row justify-between p-20">
-        <article>Categories</article>
+        <article>
+          <CategorySelectForm/>
+        </article>
 
         <article className="grid grid-cols-2 gap-4">
           <h1>Products</h1>
